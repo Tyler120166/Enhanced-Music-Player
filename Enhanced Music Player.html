@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Enhanced Video Player</title>
+<link rel="stylesheet" href="style.css">
+<style>
+  body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-color: #3d3d3d;
+    margin: 0;
+    font-family: Arial, sans-serif;
+  }
+  #videoPlayer {
+    display: block;
+    max-width: 2030px;
+    width: 100%;
+  }
+  h1 {
+    text-align: center;
+    color: #f7f7f7;
+    margin: 20px 0;
+  }
+  #playlist {
+    list-style: none;
+    padding: 0;
+    text-align: center;
+  }
+  #playlist li {
+    cursor: pointer;
+    padding: 13px;
+    background-color: #474545;
+    border: 2px solid #ddd;
+    margin-top: 1px;
+  }
+  #playlist li.active {
+    background-color: #007BFF;
+    color: white;
+  }
+</style>
+</head>
+<body>
+<h1 id="currentTrackTitle">Video Playlist</h1>
+<video id="videoPlayer" controls autoplay>
+  Your browser does not support the video tag.
+</video>
+
+<ul id="playlist">
+  <!-- Playlist items will be dynamically inserted here -->
+</ul>
+
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+  const videoPlayer = document.getElementById('videoPlayer');
+  const playlistElement = document.getElementById('playlist');
+  const currentTrackTitleElement = document.getElementById('currentTrackTitle');
+  let currentTrackIndex = 0;
+
+  const playlist = [
+    { title: "Eazy E - Boyz", src: "Videos/Eazy E - Boyz.mp4" },
+    { title: "Lil' Bow Wow - Basketball", src: "Videos/Lil' Bow Wow - Basketball.mp4" },
+    { title: "Animal I Have Become", src: "Videos/Unknown Artist - Animal I Have Become.mp4" },
+    { title: "Beautiful Things", src: "Videos/Unknown Artist - Beautiful Things.mp4" },
+    { title: "Because I Got High Closed Captioned Clean Version", src: "Videos/Unknown Artist - Because I Got High Closed Captioned Clean Version.mp4" },
+    { title: "Black Hearted", src: "Videos/Unknown Artist - Black Hearted.mp4" },
+    { title: "Californication", src: "Videos/Unknown Artist - Californication.mp4" },
+    { title: "Candy (Official Music Video)", src: "Videos/Unknown Artist - Candy (Official Music Video).mp4" },
+    { title: "Crank That (Soulja Boy) Closed Captioned", src: "Videos/Unknown Artist - Crank That (Soulja Boy) Closed Captioned.mp4" },
+    { title: "Crazy Rap MTV Safe Version, Closed Captioned", src: "Videos/Unknown Artist - Crazy Rap MTV Safe Version, Closed Captioned.mp4" },
+    { title: "Do What I Want", src: "Videos/Unknown Artist - Do What I Want.mp4" },
+    { title: "Donald Trump", src: "Videos/Unknown Artist - Donald Trump.mp4" },
+    { title: "Finer Things", src: "Videos/Unknown Artist - Finer Things.mp4" },
+    { title: "Heathens", src: "Videos/Unknown Artist - Heathens.mp4" },
+    { title: "Jungle", src: "Videos/Unknown Artist - Jungle.mp4" },
+    { title: "Karate Chop (Remix)", src: "Videos/Unknown Artist - Karate Chop (Remix).mp4" },
+    { title: "Look at Me Now (Official Video)", src: "Videos/Unknown Artist - Look at Me Now (Official Video).mp4" },
+    { title: "Martin & Gina (Official Audio)", src: "Videos/Unknown Artist - Martin & Gina (Official Audio).mp4" },
+    { title: "Numb", src: "Videos/Unknown Artist - Numb.mp4" },
+    { title: "Party Rock Anthem", src: "Videos/Unknown Artist - Party Rock Anthem.mp4" },
+    { title: "RAPSTAR (Official Video)", src: "Videos/Unknown Artist - RAPSTAR (Official Video).mp4" },
+    { title: "Somebody That I Used to Know", src: "Videos/Unknown Artist - Somebody That I Used to Know.mp4" },
+    { title: "Stressed Out", src: "Videos/Unknown Artist - Stressed Out.mp4" },
+    { title: "Take Me To Church [PARENTAL ADVISORY]", src: "Videos/Unknown Artist - Take Me To Church [PARENTAL ADVISORY].mp4" },
+    { title: "Through da Storm", src: "Videos/Unknown Artist - Through da Storm.mp4" }
+  ];
+
+  function loadTrack(index) {
+    const track = playlist[index];
+    videoPlayer.src = track.src;
+    videoPlayer.load();
+    videoPlayer.play();
+    currentTrackIndex = index;
+    updatePlaylistHighlight();
+    updateCurrentTrackTitle(track.title);
+  }
+
+  function updatePlaylistHighlight() {
+    const items = playlistElement.querySelectorAll('li');
+    items.forEach(item => item.classList.remove('active'));
+    items[currentTrackIndex].classList.add('active');
+  }
+
+  function populatePlaylist() {
+    playlist.forEach((track, index) => {
+      const trackElement = document.createElement('li');
+      trackElement.textContent = track.title;
+      trackElement.onclick = () => loadTrack(index);
+      playlistElement.appendChild(trackElement);
+    });
+  }
+
+  function updateCurrentTrackTitle(title) {
+    currentTrackTitleElement.textContent = title;
+  }
+
+  function playNextTrack() {
+    let nextTrackIndex = (currentTrackIndex + 1) % playlist.length;
+    loadTrack(nextTrackIndex);
+  }
+
+  videoPlayer.addEventListener('ended', playNextTrack);
+
+  populatePlaylist();
+  loadTrack(0); // Start with the first track
+});
+</script>
+
+</body>
+</html>

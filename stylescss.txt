@@ -1,0 +1,105 @@
+/* Base styling with CSS Variables for theme management */
+:root {
+    --background-color: #282828;
+    --text-color: #FFF;
+    --accent-color: #1DB954;
+    --player-bg-color: #333;
+    --player-border-color: var(--accent-color);
+    --scroll-thumb-color: var(--accent-color);
+    --scroll-track-color: #404040;
+}
+
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+    background-color: var(--background-color);
+    color: var(--text-color);
+    font-family: 'Arial', sans-serif;
+    line-height: 1.5;
+}
+
+.player {
+    width: 90%;
+    max-width: 600px;
+    text-align: center;
+    border: 2px solid var(--player-border-color);
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
+    background: var(--player-bg-color);
+    animation: fadeIn 0.3s ease-in-out;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+audio {
+    width: 100%;
+    margin-top: 20px;
+    outline: none;
+    height: 50px;
+    background: #000;
+}
+
+/* Audio progress bar customization for WebKit browsers */
+audio::-webkit-slider-thumb {
+    background: var(--accent-color);
+}
+
+#track-title, #track-artist {
+    margin: 10px 0;
+    font-size: calc(1em + 0.5vw); /* Responsive font size */
+    font-weight: bold;
+    letter-spacing: 0.05em;
+}
+
+#playlist {
+    list-style: none;
+    padding: 0;
+    margin-top: 20px;
+    overflow-y: auto;
+    max-height: 300px;
+    background: var(--scroll-track-color);
+}
+
+#playlist::-webkit-scrollbar {
+    width: 5px;
+}
+
+#playlist::-webkit-scrollbar-thumb {
+    background-color: var(--scroll-thumb-color);
+    border-radius: 10px;
+}
+
+#playlist li {
+    cursor: pointer;
+    padding: 10px 20px;
+    border-bottom: 1px solid var(--text-color);
+    transition: background-color 0.3s, color 0.3s;
+}
+
+#playlist li:hover, #playlist li:focus {
+    background-color: var(--accent-color);
+    color: var(--background-color);
+}
+
+@media (max-width: 600px) {
+    body {
+        padding: 20px;
+    }
+    .player {
+        width: 100%;
+    }
+    #track-title, #track-artist {
+        font-size: calc(1em + 0.2vw); /* Smaller font adjustment for narrow viewports */
+    }
+}
+
+audio:focus, #playlist li:focus {
+    outline: 2px solid var(--accent-color);
+}

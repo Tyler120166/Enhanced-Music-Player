@@ -1,0 +1,143 @@
+/* Base styling with CSS Variables for advanced theme management */
+:root {
+    --background-color: #282828; /* Dark background for sleek look */
+    --text-color: #fffffffb; /* High-contrast white for readability */
+    --accent-color: #1DB954; /* Vibrant Spotify green for accents */
+    --player-bg-color: #333333; /* Dark grey for player background */
+    --player-border-color: var(--accent-color); /* Accent color for player border */
+    --scroll-thumb-color: var(--accent-color); /* Thumb color for scrollbar */
+    --scroll-track-color: #404040; /* Grey color for scrollbar track */
+    --btn-hover-color: #1cb842; /* Lighter green for hover states */
+    --fade-in-duration: 0.5s; /* Duration for fade-in effects */
+    --transition-speed: 0.25s; /* Speed for transitions */
+    --shadow-depth: 15px; /* Depth for shadows */
+    --border-focus: 3px solid var(--accent-color); /* Focus border style */
+    --hover-scale: 1.07; /* Scale factor for hover transformations */
+}
+
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+    background-color: var(--background-color);
+    color: var(--text-color);
+    font-family: 'Arial', sans-serif;
+    line-height: 1.6;
+    transition: background-color var(--transition-speed);
+}
+
+.player {
+    width: 95%;
+    max-width: 700px;
+    text-align: center;
+    border: 3px solid var(--player-border-color);
+    padding: 25px;
+    border-radius: 12px;
+    box-shadow: 0 var(--shadow-depth) var(--shadow-depth) rgba(0, 0, 0, 0.4);
+    background: var(--player-bg-color);
+    animation: fadeIn var(--fade-in-duration) ease-in-out forwards;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(30px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+audio, video {
+    width: 100%;
+    margin-top: 20px;
+    outline: none;
+    background: #000;
+    border-radius: 6px;
+    overflow: hidden;
+    box-shadow: 0 6px 12px rgba(0,0,0,0.6);
+    transition: transform var(--transition-speed) ease-out;
+}
+
+audio:hover, video:hover {
+    transform: scale(var(--hover-scale));
+}
+
+.control-button {
+    background: none;
+    border: none;
+    color: var(--text-color);
+    padding: 12px;
+    cursor: pointer;
+    font-size: 20px;
+    transition: color var(--transition-speed), transform var(--transition-speed);
+}
+
+.control-button:hover, .control-button:focus {
+    color: var(--btn-hover-color);
+    transform: translateY(-6px);
+    outline: none;
+}
+
+#playlist {
+    scrollbar-width: thin;
+    scrollbar-color: var(--scroll-thumb-color) var(--scroll-track-color);
+}
+
+audio::-webkit-slider-thumb {
+    background: var(--accent-color);
+}
+
+#track-title, #track-artist {
+    margin: 10px 0;
+    font-size: clamp(1.2rem, 2.8vw, 2.2rem);
+    font-weight: bold;
+    letter-spacing: 0.6em;
+    align-items: last baseline;
+}
+
+#playlist {
+    list-style: none;
+    padding: 0;
+    margin-top: 25px;
+    overflow-y: auto;
+    max-height: 590px;
+    background: var(--scroll-track-color);
+    border-radius: 10px;
+}
+
+#playlist::-webkit-scrollbar {
+    width: 10px;
+}
+
+#playlist::-webkit-scrollbar-thumb {
+    background-color: var(--scroll-thumb-color);
+    border-radius: 12px;
+}
+
+#playlist li {
+    padding: 15px 25px;
+    border-bottom: 2px solid var(--text-color);
+    transition: background-color var(--transition-speed), color var(--transition-speed), transform var(--transition-speed);
+}
+
+#playlist li:hover, #playlist li:focus {
+    background-color: var(--accent-color);
+    color: var(--background-color);
+    transform: scale(var(--hover-scale));
+}
+
+@media (max-width: 768px) {
+    body { padding: 30px; }
+    .player { width: 100%; }
+    #track-title, #track-artist { font-size: 1.1rem; }
+}
+
+audio:focus, #playlist li:focus {
+    outline: var(--border-focus);
+}
+
+video::-webkit-media-controls, video::-moz-box, video::--ms-fullscreen-button {
+    display: none;
+}
+
+.control-button:focus {
+    outline: var(--border-focus);
+}
